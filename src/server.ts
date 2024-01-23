@@ -3,10 +3,31 @@ import connectDB from "./config/db";
 import "dotenv/config";
 import UserRouter from "./routes/UserRouter";
 import RecipeRouter from "./routes/RecipeRouter";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
-const port = process.env.PORT;
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://wind-kmzf.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (
+      origin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void
+    ) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS policy violation"));
+      }
+    },
+  })
+);
+
+const port = process.env.PORT || 3001;
 
 connectDB();
 
