@@ -3,6 +3,7 @@ import User, { IUser } from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { authMiddleware } from "../middleware/authMiddleware";
 const router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
   try {
@@ -20,6 +21,20 @@ router.post("/", async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error creating user", error });
   }
 });
+
+router.get(
+  "/verifySession",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      res.status(201).json({ message: "Verification successed." });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error verifying your identify.", error });
+    }
+  }
+);
 
 router.post("/login", async (req: Request, res: Response) => {
   try {
@@ -46,7 +61,7 @@ router.post("/login", async (req: Request, res: Response) => {
       maxAge: 3600000, // Expires in 1 hour
     });
 
-    res.json({ message: "Logged in successfully", token });
+    res.json({ message: "Logged in successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
   }
