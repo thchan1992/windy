@@ -4,9 +4,11 @@ import "dotenv/config";
 import UserRouter from "./routes/UserRouter";
 import RecipeRouter from "./routes/RecipeRouter";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:3000",
   "https://wind-kmzf.vercel.app",
