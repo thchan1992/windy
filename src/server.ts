@@ -26,6 +26,7 @@ app.use(
         callback(new Error("CORS policy violation"));
       }
     },
+    credentials: true,
   })
 );
 
