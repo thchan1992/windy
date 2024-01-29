@@ -16,7 +16,9 @@ router.get(
       }
 
       const { userId } = userData;
-      const recipes = await Recipe.find({ createdBy: userId });
+      const recipes = await Recipe.find({ createdBy: userId }).select(
+        "title steps"
+      );
       res.json(recipes);
     } catch (error) {
       res.status(500).json({ message: "Error fetching recipes", error });
@@ -42,6 +44,7 @@ router.post("/add", authMiddleware, async (req: Request, res: Response) => {
       .status(201)
       .json({ message: "Recipe added successfully", recipe: newRecipe });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Error adding recipe", error });
   }
 });
