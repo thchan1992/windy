@@ -38,7 +38,7 @@ app.use("/users", UserRouter);
 app.use("/recipes", RecipeRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("This is the backend server for Good-Bye Stale");
 });
 
 app.listen(port, () => {
